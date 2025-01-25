@@ -18,7 +18,7 @@ GREEN = (0, 255, 0)
 BLUE = (0, 0, 255)
 # Создаем игру и окно
 pygame.init()
-pygame.mixer.init()
+#pygame.mixer.init()
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("My Game")
 clock = pygame.time.Clock()
@@ -37,21 +37,12 @@ while running:
     enemy.draw(screen)
     enemy.follow(player, 0.5)
     player.draw(screen)
+    player.movement()
     if x >= WIDTH+20:
         x = -70
     # Держим цикл на правильной скорости
     clock.tick(FPS)
 
-    # Управление 
-    keys = pygame.key.get_pressed()
-    if keys[pygame.K_d]:
-        player.x += 1
-    elif keys[pygame.K_a]:
-        player.x -= 1
-    if keys[pygame.K_w]:
-        player.y  -= 1
-    elif keys[pygame.K_s]:
-        player.y  += 1
 
     pygame.display.update()
     # Ввод процесса (события)
