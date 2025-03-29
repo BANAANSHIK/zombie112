@@ -1,10 +1,22 @@
 import pygame
+import math
+import os
+import sys
+
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+from bullet import Bullet
+from matematika import calculate_angle
+
+
+
 class Player:
     width = 50
     height = 50
     speed = 5
     x = 100
     y = 100
+    hp = 100
+
     image = ""
 
     surface = ""
@@ -57,4 +69,28 @@ class Player:
             self.speed = 4
         else:
             self.speed = 2
-        
+
+
+
+    def showHP(self, screen:pygame.Surface,x,y):
+        pygame.draw.rect(screen,(0,0,0),(20,20,100,50))
+        pygame.draw.rect(screen,(0,200,100),(20,20,self.hp,50))
+
+
+
+
+
+    def shoot(self,mouse_x,mouse_y):
+        direction_x = mouse_x - self.x
+        direction_y = mouse_y - self.y
+        lenght = math.hypot(direction_x,direction_y)
+        if lenght == 0:
+            return None
+        direction_x /= lenght
+        direction_y /= lenght
+
+        angle = calculate_angle(mouse_x,mouse_y,self.x,self.y)
+        return Bullet("./image.png",width=80,height=40,x=self.x,y=self.y,direction=(direction_x,direction_y),speed=6,rotation=angle-90)
+
+
+pygame.quit()
